@@ -1,0 +1,89 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MKR1
+{
+    class Program
+    {
+        static void Main(string[] args) // виводимо всі функції на єкран
+        {
+            int[,] arr = GetArr(8, 5); // викликаємо функцію заповнення масиву випадковими числами і задаємо розмір
+
+            DisplayArray(arr);
+            Console.WriteLine(); // пробіл між функціями 
+            DoWork(arr);
+            Console.WriteLine();
+            DisplayArray(arr);
+        }
+
+        static void DoWork( int[,] arr) // знаходимо суму елементів кожного рядка
+        {
+            int rowsSum = 0; //задаємо змінну для знаходження суми
+            float columnAvg = 0; // змінна типу float, бо знаходимо середнє арифметичне
+
+            for (int i = 0; i < arr.GetLength(0); i++)
+            {
+                for (int j = 0; j < arr.GetLength(1); j++)
+                {
+                    rowsSum += arr[i, j]; 
+                }
+
+                Console.WriteLine($"Row {i}, Sum : {rowsSum}");
+                rowsSum = 0;
+            }
+
+            Console.WriteLine();
+
+            for (int i = 0; i < arr.GetLength(1); i++)
+            {
+                for (int j = 0; j < arr.GetLength(0); j++)
+                {
+                    columnAvg += arr[j, i];
+                }
+                columnAvg /= arr.GetLength(0); // знаходимо середнє арифметичне
+
+                Console.WriteLine($"Column {i}, Avg : {columnAvg}");
+                columnAvg = 0;
+            }
+
+            int tmp = 0; // міняємо місцями 3 та 5 рядкі масиву
+            for (int j = 0; j < arr.GetLength(1); j++)
+            {
+                tmp = arr[2, j];
+                arr[2, j] = arr[4, j];
+                arr[4, j] = tmp;
+            }
+        }
+
+        static int[,] GetArr(int rows, int columns) // створюємо двовимірний масив
+        {
+            int[,] arr = new int[rows, columns];
+            Random random = new Random();
+
+            for (int i = 0; i < arr.GetLength(0); i++)
+            {
+                for (int j = 0; j < arr.GetLength(1); j++)
+                {
+                    arr[i, j] = random.Next(30, 99); // заповнюємо масив випадковими числами в діапазоні від 30 до 99
+                }
+            }
+
+            return arr;
+        }
+
+        static void DisplayArray(int[,] arr) // функція виводу масива на екран
+        {
+            for (int i = 0; i < arr.GetLength(0); i++)
+            {
+                for (int j = 0; j < arr.GetLength(1); j++)
+                {
+                    Console.Write($"{arr[i, j]} ");
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
